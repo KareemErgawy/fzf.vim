@@ -74,7 +74,7 @@ function! s:history(arg, bang)
   endif
 endfunction
 
-function! fzf#complete(...)
+function! fzf_vim#complete(...)
   return call('fzf#vim#complete', a:000)
 endfunction
 
