@@ -40,42 +40,42 @@ function! s:defs(commands)
 endfunction
 
 call s:defs([
-\'command!      -bang -nargs=? -complete=dir Files       call fzf_vim#vim#files(<q-args>, <bang>0)',
-\'command!      -bang -nargs=? GitFiles                  call fzf_vim#vim#gitfiles(<q-args>, <bang>0)',
-\'command!      -bang -nargs=? GFiles                    call fzf_vim#vim#gitfiles(<q-args>, <bang>0)',
-\'command! -bar -bang -nargs=? -complete=buffer Buffers  call fzf_vim#vim#buffers(<q-args>, <bang>0)',
-\'command!      -bang -nargs=* Lines                     call fzf_vim#vim#lines(<q-args>, <bang>0)',
-\'command!      -bang -nargs=* BLines                    call fzf_vim#vim#buffer_lines(<q-args>, <bang>0)',
-\'command! -bar -bang Colors                             call fzf_vim#vim#colors(<bang>0)',
-\'command!      -bang -nargs=+ -complete=dir Locate      call fzf_vim#vim#locate(<q-args>, <bang>0)',
-\'command!      -bang -nargs=* Ag                        call fzf_vim#vim#ag(<q-args>, <bang>0)',
-\'command!      -bang -nargs=* Rg                        call fzf_vim#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, <bang>0)',
-\'command!      -bang -nargs=* Tags                      call fzf_vim#vim#tags(<q-args>, <bang>0)',
-\'command!      -bang -nargs=* BTags                     call fzf_vim#vim#buffer_tags(<q-args>, <bang>0)',
-\'command! -bar -bang Snippets                           call fzf_vim#vim#snippets(<bang>0)',
-\'command! -bar -bang Commands                           call fzf_vim#vim#commands(<bang>0)',
-\'command! -bar -bang Marks                              call fzf_vim#vim#marks(<bang>0)',
-\'command! -bar -bang Helptags                           call fzf_vim#vim#helptags(<bang>0)',
-\'command! -bar -bang Windows                            call fzf_vim#vim#windows(<bang>0)',
-\'command! -bar -bang Commits                            call fzf_vim#vim#commits(<bang>0)',
-\'command! -bar -bang BCommits                           call fzf_vim#vim#buffer_commits(<bang>0)',
-\'command! -bar -bang Maps                               call fzf_vim#vim#maps("n", <bang>0)',
-\'command! -bar -bang Filetypes                          call fzf_vim#vim#filetypes(<bang>0)',
+\'command!      -bang -nargs=? -complete=dir Files       call fzf#vim#files(<q-args>, <bang>0)',
+\'command!      -bang -nargs=? GitFiles                  call fzf#vim#gitfiles(<q-args>, <bang>0)',
+\'command!      -bang -nargs=? GFiles                    call fzf#vim#gitfiles(<q-args>, <bang>0)',
+\'command! -bar -bang -nargs=? -complete=buffer Buffers  call fzf#vim#buffers(<q-args>, <bang>0)',
+\'command!      -bang -nargs=* Lines                     call fzf#vim#lines(<q-args>, <bang>0)',
+\'command!      -bang -nargs=* BLines                    call fzf#vim#buffer_lines(<q-args>, <bang>0)',
+\'command! -bar -bang Colors                             call fzf#vim#colors(<bang>0)',
+\'command!      -bang -nargs=+ -complete=dir Locate      call fzf#vim#locate(<q-args>, <bang>0)',
+\'command!      -bang -nargs=* Ag                        call fzf#vim#ag(<q-args>, <bang>0)',
+\'command!      -bang -nargs=* Rg                        call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, <bang>0)',
+\'command!      -bang -nargs=* Tags                      call fzf#vim#tags(<q-args>, <bang>0)',
+\'command!      -bang -nargs=* BTags                     call fzf#vim#buffer_tags(<q-args>, <bang>0)',
+\'command! -bar -bang Snippets                           call fzf#vim#snippets(<bang>0)',
+\'command! -bar -bang Commands                           call fzf#vim#commands(<bang>0)',
+\'command! -bar -bang Marks                              call fzf#vim#marks(<bang>0)',
+\'command! -bar -bang Helptags                           call fzf#vim#helptags(<bang>0)',
+\'command! -bar -bang Windows                            call fzf#vim#windows(<bang>0)',
+\'command! -bar -bang Commits                            call fzf#vim#commits(<bang>0)',
+\'command! -bar -bang BCommits                           call fzf#vim#buffer_commits(<bang>0)',
+\'command! -bar -bang Maps                               call fzf#vim#maps("n", <bang>0)',
+\'command! -bar -bang Filetypes                          call fzf#vim#filetypes(<bang>0)',
 \'command!      -bang -nargs=* History                   call s:history(<q-args>, <bang>0)'])
 
 function! s:history(arg, bang)
   let bang = a:bang || a:arg[len(a:arg)-1] == '!'
   if a:arg[0] == ':'
-    call fzf_vim#vim#command_history(bang)
+    call fzf#vim#command_history(bang)
   elseif a:arg[0] == '/'
-    call fzf_vim#vim#search_history(bang)
+    call fzf#vim#search_history(bang)
   else
-    call fzf_vim#vim#history(bang)
+    call fzf#vim#history(bang)
   endif
 endfunction
 
-function! fzf_vim#complete(...)
-  return call('fzf_vim#vim#complete', a:000)
+function! fzf#complete(...)
+  return call('fzf#vim#complete', a:000)
 endfunction
 
 if (has('nvim') || has('terminal') && has('patch-8.0.995')) && (get(g:, 'fzf_statusline', 1) || get(g:, 'fzf_nvim_statusline', 1))
@@ -113,36 +113,36 @@ if (has('nvim') || has('terminal') && has('patch-8.0.995')) && (get(g:, 'fzf_sta
   augroup END
 endif
 
-if !exists('g:fzf_vim#vim#buffers')
-  let g:fzf_vim#vim#buffers = {}
+if !exists('g:fzf#vim#buffers')
+  let g:fzf#vim#buffers = {}
 endif
 
 augroup fzf_buffers
   autocmd!
   if exists('*reltimefloat')
-    autocmd BufWinEnter,WinEnter * let g:fzf_vim#vim#buffers[bufnr('')] = reltimefloat(reltime())
+    autocmd BufWinEnter,WinEnter * let g:fzf#vim#buffers[bufnr('')] = reltimefloat(reltime())
   else
-    autocmd BufWinEnter,WinEnter * let g:fzf_vim#vim#buffers[bufnr('')] = localtime()
+    autocmd BufWinEnter,WinEnter * let g:fzf#vim#buffers[bufnr('')] = localtime()
   endif
-  autocmd BufDelete * silent! call remove(g:fzf_vim#vim#buffers, expand('<abuf>'))
+  autocmd BufDelete * silent! call remove(g:fzf#vim#buffers, expand('<abuf>'))
 augroup END
 
-inoremap <expr> <plug>(fzf-complete-word)        fzf_vim#vim#complete#word()
+inoremap <expr> <plug>(fzf-complete-word)        fzf#vim#complete#word()
 if s:is_win
-  inoremap <expr> <plug>(fzf-complete-path)      fzf_vim#vim#complete#path('dir /s/b')
-  inoremap <expr> <plug>(fzf-complete-file)      fzf_vim#vim#complete#path('dir /s/b/a:-d')
+  inoremap <expr> <plug>(fzf-complete-path)      fzf#vim#complete#path('dir /s/b')
+  inoremap <expr> <plug>(fzf-complete-file)      fzf#vim#complete#path('dir /s/b/a:-d')
 else
-  inoremap <expr> <plug>(fzf-complete-path)      fzf_vim#vim#complete#path("find . -path '*/\.*' -prune -o -print \| sed '1d;s:^..::'")
-  inoremap <expr> <plug>(fzf-complete-file)      fzf_vim#vim#complete#path("find . -path '*/\.*' -prune -o -type f -print -o -type l -print \| sed 's:^..::'")
+  inoremap <expr> <plug>(fzf-complete-path)      fzf#vim#complete#path("find . -path '*/\.*' -prune -o -print \| sed '1d;s:^..::'")
+  inoremap <expr> <plug>(fzf-complete-file)      fzf#vim#complete#path("find . -path '*/\.*' -prune -o -type f -print -o -type l -print \| sed 's:^..::'")
 endif
-inoremap <expr> <plug>(fzf-complete-file-ag)     fzf_vim#vim#complete#path('ag -l -g ""')
-inoremap <expr> <plug>(fzf-complete-line)        fzf_vim#vim#complete#line()
-inoremap <expr> <plug>(fzf-complete-buffer-line) fzf_vim#vim#complete#buffer_line()
+inoremap <expr> <plug>(fzf-complete-file-ag)     fzf#vim#complete#path('ag -l -g ""')
+inoremap <expr> <plug>(fzf-complete-line)        fzf#vim#complete#line()
+inoremap <expr> <plug>(fzf-complete-buffer-line) fzf#vim#complete#buffer_line()
 
-nnoremap <silent> <plug>(fzf-maps-n) :<c-u>call fzf_vim#vim#maps('n', 0)<cr>
-inoremap <silent> <plug>(fzf-maps-i) <c-o>:call fzf_vim#vim#maps('i', 0)<cr>
-xnoremap <silent> <plug>(fzf-maps-x) :<c-u>call fzf_vim#vim#maps('x', 0)<cr>
-onoremap <silent> <plug>(fzf-maps-o) <c-c>:<c-u>call fzf_vim#vim#maps('o', 0)<cr>
+nnoremap <silent> <plug>(fzf-maps-n) :<c-u>call fzf#vim#maps('n', 0)<cr>
+inoremap <silent> <plug>(fzf-maps-i) <c-o>:call fzf#vim#maps('i', 0)<cr>
+xnoremap <silent> <plug>(fzf-maps-x) :<c-u>call fzf#vim#maps('x', 0)<cr>
+onoremap <silent> <plug>(fzf-maps-o) <c-c>:<c-u>call fzf#vim#maps('o', 0)<cr>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
